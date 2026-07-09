@@ -1,46 +1,14 @@
 "use client";
 
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 import { ArrowRight, Clock, Users } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 const courses = [
-  {
-    title: "一对一精品辅导",
-    desc: "量身定制学习方案，针对性解决问题，快速提升成绩",
-    duration: "60 分钟 / 课时",
-    students: "1 人",
-    price: "300",
-    features: ["个性化方案", "错题辅导", "进度跟踪", "反馈报告"],
-    highlight: true,
-  },
-  {
-    title: "小班培优课程",
-    desc: "4-6 人小班互动教学，适合基础较好的学生拔高",
-    duration: "90 分钟 / 课时",
-    students: "4-6 人",
-    price: "180",
-    features: ["互动教学", "小组讨论", "思维拓展", "学习氛围"],
-    highlight: false,
-  },
-  {
-    title: "作业辅导",
-    desc: "每日作业辅导答疑，培养良好学习习惯",
-    duration: "90 分钟 / 天",
-    students: "4-6 人",
-    price: "120",
-    features: ["答疑解惑", "习惯培养", "时间管理", "错题整理"],
-    highlight: false,
-  },
-  {
-    title: "奥数思维训练",
-    desc: "培养数学思维能力，提升逻辑推理能力",
-    duration: "90 分钟 / 课时",
-    students: "4-6 人",
-    price: "200",
-    features: ["思维培养", "竞赛技巧", "难题突破", "知识拓展"],
-    highlight: false,
-  },
+  { title: "一对一辅导", desc: "诊断定制方案，每周 2-3 次课，针对薄弱环节重点突破。", duration: "60 分钟/课时", students: "1 人", price: "300", highlight: true },
+  { title: "小班培优", desc: "4-6 人精品小班，互动教学，适合基础较好的学生拔高。", duration: "90 分钟/课时", students: "4-6 人", price: "180", highlight: false },
+  { title: "考前集训", desc: "期中期末、小升初专项突破，梳理知识 + 真题模拟。", duration: "90 分钟/课时", students: "4-6 人", price: "200", highlight: false },
 ];
 
 const grades = [
@@ -57,165 +25,87 @@ export default function CoursesPage() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      <section className="pt-28 md:pt-36 pb-16 md:pb-20">
-        <div className="max-w-5xl mx-auto px-5 md:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <p className="text-[13px] font-medium text-apple-blue mb-4">
-              课程服务
-            </p>
-            <h1 className="text-[32px] md:text-[48px] font-semibold text-apple-dark leading-[1.1] tracking-tight">
-              找到适合孩子的
-              <br />
-              学习方式
-            </h1>
-          </div>
+      {/* Hero */}
+      <section className="relative pt-24 md:pt-32 pb-12 md:pb-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-white to-blue-50" />
+        <div className="relative max-w-5xl mx-auto px-5 md:px-8">
+          <AnimateOnScroll anim="fade-up">
+            <div className="max-w-2xl">
+              <p className="text-[13px] font-semibold text-blue-500 tracking-widest uppercase mb-4">Courses</p>
+              <h1 className="text-[36px] md:text-[48px] font-bold text-slate-900 leading-[1.1] tracking-tight mb-4">
+                找到适合孩子的<span className="text-blue-500">学习方案</span>
+              </h1>
+              <p className="text-[16px] text-slate-500">从一对一诊断到考前集训，分层教学，按需选择。</p>
+            </div>
+          </AnimateOnScroll>
         </div>
       </section>
 
       {/* Courses */}
-      <section className="pb-20 md:pb-28">
+      <section className="pb-16 md:pb-24">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {courses.map((c) => (
-              <div
-                key={c.title}
-                className={`rounded-apple p-6 md:p-8 border transition-all duration-300 ${
-                  c.highlight
-                    ? "bg-apple-dark text-white border-apple-dark-2"
-                    : "bg-white border-apple-gray-5 hover:border-apple-gray-4"
-                }`}
-              >
-                {c.highlight && (
-                  <span className="inline-block text-[11px] font-medium text-apple-blue-light bg-white/10 px-2.5 py-0.5 rounded-full mb-3">
-                    最受欢迎
-                  </span>
-                )}
-                <h3
-                  className={`text-[18px] font-semibold mb-1 ${
-                    c.highlight ? "text-white" : "text-apple-dark"
-                  }`}
-                >
-                  {c.title}
-                </h3>
-                <p
-                  className={`text-[13px] mb-4 ${
-                    c.highlight ? "text-apple-gray-3" : "text-apple-gray"
-                  }`}
-                >
-                  {c.desc}
-                </p>
-                <div className="flex gap-4 mb-5">
-                  <span
-                    className={`flex items-center gap-1 text-[12px] ${
-                      c.highlight ? "text-apple-gray-3" : "text-apple-gray"
-                    }`}
-                  >
-                    <Clock className="w-3.5 h-3.5" />
-                    {c.duration}
-                  </span>
-                  <span
-                    className={`flex items-center gap-1 text-[12px] ${
-                      c.highlight ? "text-apple-gray-3" : "text-apple-gray"
-                    }`}
-                  >
-                    <Users className="w-3.5 h-3.5" />
-                    {c.students}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {c.features.map((f) => (
-                    <span
-                      key={f}
-                      className={`text-[11px] px-2.5 py-1 rounded-full ${
-                        c.highlight
-                          ? "bg-white/10 text-white/80"
-                          : "bg-apple-gray-6 text-apple-gray"
-                      }`}
-                    >
-                      {f}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span
-                      className={`text-[28px] font-semibold tracking-tight ${
-                        c.highlight ? "text-white" : "text-apple-dark"
-                      }`}
-                    >
-                      &yen;{c.price}
-                    </span>
-                    <span
-                      className={`text-[12px] ml-1 ${
-                        c.highlight ? "text-apple-gray-3" : "text-apple-gray"
-                      }`}
-                    >
-                      / 课时
-                    </span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {courses.map((c, i) => (
+              <AnimateOnScroll key={i} anim="scale-in" delay={i * 0.12}>
+                <div className={`relative rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 ${c.highlight ? "bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-2xl" : "bg-white shadow-sm hover:shadow-xl border border-slate-100"}`}>
+                  {c.highlight && <div className="absolute -top-3 left-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-900 text-[11px] font-bold px-3 py-1 rounded-full">最受欢迎</div>}
+                  <h3 className={`text-xl font-bold mb-3 ${c.highlight ? "text-white" : "text-slate-800"}`}>{c.title}</h3>
+                  <p className={`text-[14px] leading-relaxed mb-5 ${c.highlight ? "text-slate-300" : "text-slate-500"}`}>{c.desc}</p>
+                  <div className="flex gap-4 mb-6">
+                    <span className={`flex items-center gap-1 text-[12px] ${c.highlight ? "text-slate-400" : "text-slate-400"}`}><Clock className="w-3.5 h-3.5" />{c.duration}</span>
+                    <span className={`flex items-center gap-1 text-[12px] ${c.highlight ? "text-slate-400" : "text-slate-400"}`}><Users className="w-3.5 h-3.5" />{c.students}</span>
                   </div>
-                  <a
-                    href="/contact"
-                    className={`inline-flex items-center gap-1 text-[13px] font-medium ${
-                      c.highlight
-                        ? "text-white hover:text-apple-blue-light"
-                        : "text-apple-blue hover:text-apple-blue/80"
-                    } transition-colors`}
-                  >
-                    咨询详情
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className={`text-[28px] font-bold tracking-tight ${c.highlight ? "text-white" : "text-slate-900"}`}>&yen;{c.price}</span>
+                      <span className={`text-[12px] ml-1 ${c.highlight ? "text-slate-400" : "text-slate-400"}`}>/课时</span>
+                    </div>
+                    <a href="/contact" className={`inline-flex items-center gap-1.5 text-[14px] font-semibold ${c.highlight ? "text-amber-400 hover:text-amber-300" : "text-blue-500 hover:text-blue-400"} transition-colors`}>
+                      咨询 <ArrowRight className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* Grades */}
-      <section className="py-20 md:py-28 bg-apple-gray-6">
+      <section className="py-16 md:py-24 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
-          <h2 className="text-[28px] md:text-[36px] font-semibold text-apple-dark tracking-tight mb-14">
-            各年级重点
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {grades.map((g) => (
-              <div
-                key={g.name}
-                className="bg-white rounded-apple p-5 flex items-start gap-4"
-              >
-                <div className="w-10 h-10 rounded-[12px] bg-apple-gray-6 flex items-center justify-center flex-shrink-0">
-                  <span className="text-[14px] font-semibold text-apple-blue">
-                    {g.g}
-                  </span>
+          <AnimateOnScroll anim="fade-up">
+            <p className="text-[13px] font-semibold text-blue-500 tracking-widest uppercase mb-4">Grades</p>
+            <h2 className="text-[28px] md:text-[36px] font-bold text-slate-900 tracking-tight mb-12">各年级教学重点</h2>
+          </AnimateOnScroll>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {grades.map((g, i) => (
+              <AnimateOnScroll key={g.name} anim="fade-up" delay={i * 0.06}>
+                <div className="bg-white rounded-2xl p-5 border border-slate-50 hover:shadow-xl transition-all hover:-translate-y-0.5 flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center flex-shrink-0">
+                    <span className="text-[14px] font-bold text-blue-500">{g.g}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-[14px] font-bold text-slate-800 mb-1">{g.name}</h3>
+                    <p className="text-[13px] text-slate-500">{g.topics}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-[14px] font-semibold text-apple-dark mb-0.5">
-                    {g.name}
-                  </h3>
-                  <p className="text-[12px] text-apple-gray">{g.topics}</p>
-                </div>
-              </div>
+              </AnimateOnScroll>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-5xl mx-auto px-5 md:px-8 text-center">
-          <h2 className="text-[24px] md:text-[32px] font-semibold text-apple-dark tracking-tight mb-3">
-            不确定选哪个课程？
-          </h2>
-          <p className="text-[15px] text-apple-gray mb-8">
-            免费咨询阮老师，为您推荐最适合的方案
-          </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center gap-2 px-7 py-3 bg-apple-blue text-white text-[15px] font-medium rounded-full hover:bg-apple-blue/90 transition-colors"
-          >
-            免费咨询
-            <ArrowRight className="w-4 h-4" />
-          </a>
+      <section className="py-16 md:py-24">
+        <div className="max-w-2xl mx-auto px-5 text-center">
+          <AnimateOnScroll anim="fade-up">
+            <h2 className="text-[24px] md:text-[32px] font-bold text-slate-900 tracking-tight mb-4">不确定选哪个课程？</h2>
+            <p className="text-[15px] text-slate-500 mb-8">免费咨询，老师根据孩子情况推荐最合适的方案。</p>
+            <a href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white text-[15px] font-semibold rounded-2xl hover:bg-slate-800 transition-all hover:-translate-y-0.5 shadow-lg">
+              免费咨询 <ArrowRight className="w-4 h-4" />
+            </a>
+          </AnimateOnScroll>
         </div>
       </section>
 

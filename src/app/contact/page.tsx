@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send, CheckCircle, Clock, Star } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import AnimateOnScroll from "@/components/AnimateOnScroll";
 
 const contacts = [
   { icon: Phone, label: "咨询电话", value: "138-0013-8000", href: "tel:13800138000" },
@@ -12,29 +13,12 @@ const contacts = [
   { icon: MapPin, label: "地址", value: "广东深圳宝安区", href: "#" },
 ];
 
-const times = [
-  "周一至周五：17:00 - 21:00",
-  "周六：09:00 - 21:00",
-  "周日：09:00 - 21:00",
-];
-
 export default function ContactPage() {
-  const [form, setForm] = useState({
-    parentName: "",
-    studentName: "",
-    grade: "",
-    phone: "",
-    wechat: "",
-    message: "",
-  });
+  const [form, setForm] = useState({ parentName: "", studentName: "", grade: "", phone: "", wechat: "", message: "" });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -61,92 +45,82 @@ export default function ContactPage() {
     <div className="min-h-screen bg-white">
       <Navbar />
 
-      <section className="pt-28 md:pt-36 pb-16 md:pb-20">
-        <div className="max-w-5xl mx-auto px-5 md:px-8">
-          <div className="text-center max-w-2xl mx-auto">
-            <p className="text-[13px] font-medium text-apple-blue mb-4">
-              联系咨询
-            </p>
-            <h1 className="text-[32px] md:text-[48px] font-semibold text-apple-dark leading-[1.1] tracking-tight">
-              开始孩子的学习之旅
-            </h1>
-          </div>
+      {/* Hero */}
+      <section className="pt-24 md:pt-32 pb-12 md:pb-16 bg-gradient-to-br from-amber-50 via-white to-blue-50">
+        <div className="max-w-5xl mx-auto px-5 md:px-8 text-center">
+          <p className="text-[13px] font-semibold text-blue-500 tracking-widest uppercase mb-4">Contact</p>
+          <h1 className="text-[32px] md:text-[44px] font-bold text-slate-900 tracking-tight mb-4">
+            免费诊断，<span className="text-blue-500">先聊再决定</span>
+          </h1>
+          <p className="text-[15px] text-slate-500 max-w-md mx-auto">
+            填写表单，阮老师会在 24 小时内联系您。<br />无需任何费用，只是帮孩子分析一下现状。
+          </p>
         </div>
       </section>
 
       <section className="pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto px-5 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-            {/* Left */}
-            <div className="lg:col-span-2 space-y-8">
-              <div className="space-y-3">
-                {contacts.map((c) => (
-                  <a
-                    key={c.label}
-                    href={c.href}
-                    className="flex items-center gap-4 p-4 rounded-apple bg-apple-gray-6 hover:bg-apple-gray-5 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-[12px] bg-white flex items-center justify-center shadow-apple">
-                      <c.icon className="w-4.5 h-4.5 text-apple-blue" />
-                    </div>
-                    <div>
-                      <div className="text-[11px] text-apple-gray">
-                        {c.label}
-                      </div>
-                      <div className="text-[14px] font-medium text-apple-dark">
-                        {c.value}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
+            {/* Left - Contact info */}
+            <AnimateOnScroll anim="fade-in-right" className="lg:col-span-2 space-y-5">
+              {contacts.map((c) => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 hover:bg-slate-100 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
+                    <c.icon className="w-4 h-4 text-blue-500" />
+                  </div>
+                  <div>
+                    <div className="text-[12px] text-slate-400">{c.label}</div>
+                    <div className="text-[15px] font-semibold text-slate-700">{c.value}</div>
+                  </div>
+                </a>
+              ))}
 
-              <div className="bg-apple-gray-6 rounded-apple p-6">
-                <h3 className="text-[14px] font-semibold text-apple-dark mb-4">
+              <div className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="text-[14px] font-semibold text-slate-700 mb-3 flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-slate-400" />
                   咨询时间
                 </h3>
-                <div className="space-y-2">
-                  {times.map((t) => (
-                    <div
-                      key={t}
-                      className="text-[13px] text-apple-gray flex items-center gap-2"
-                    >
-                      <span className="w-1 h-1 rounded-full bg-apple-green flex-shrink-0" />
-                      {t}
-                    </div>
+                <div className="space-y-1.5">
+                  {["周一至周五：17:00 - 21:00", "周六、周日：09:00 - 21:00"].map((t) => (
+                    <div key={t} className="text-[13px] text-slate-500">{t}</div>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-apple-gray-6 rounded-apple p-6 text-center">
-                <p className="text-[13px] text-apple-gray mb-4">扫码添加微信</p>
-                <div className="w-40 h-40 mx-auto bg-white rounded-apple flex items-center justify-center shadow-apple">
-                  <img
-                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=QR%20code%20minimal%20clean%20black%20white%20simple%20square%20icon&image_size=square"
-                    alt="微信二维码"
-                    className="w-36 h-36"
-                  />
+              <div className="bg-slate-50 rounded-2xl p-5 text-center">
+                <p className="text-[13px] text-slate-400 mb-3">扫码添加微信</p>
+                <div className="w-36 h-36 mx-auto bg-white rounded-2xl flex items-center justify-center shadow-sm">
+                  <img src="/img/Head.jpg" alt="微信二维码" className="w-32 h-32 rounded-xl object-cover" />
                 </div>
-                <p className="text-[12px] text-apple-blue font-medium mt-3">
-                  Cherry-Rora
-                </p>
+                <p className="text-[13px] text-blue-500 font-semibold mt-3">Cherry-Rora</p>
               </div>
-            </div>
+              </AnimateOnScroll>
 
             {/* Right - Form */}
-            <div className="lg:col-span-3">
+            <AnimateOnScroll anim="fade-in-left" delay={0.15} className="lg:col-span-3">
+              {/* Trust badge */}
+              <div className="flex items-center gap-4 mb-6 p-4 bg-blue-50 rounded-2xl">
+                <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center">
+                  <Star className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <div className="text-[14px] font-semibold text-slate-800">已服务 200+ 学员</div>
+                  <div className="text-[12px] text-slate-500">提交后 24 小时内回复，信息严格保密</div>
+                </div>
+              </div>
+
               {submitted ? (
-                <div className="bg-apple-green/5 border border-apple-green/20 rounded-apple p-10 text-center">
-                  <CheckCircle className="w-14 h-14 text-apple-green mx-auto mb-4" />
-                  <h3 className="text-[20px] font-semibold text-apple-dark mb-2">
-                    提交成功
-                  </h3>
-                  <p className="text-[14px] text-apple-gray">
-                    阮老师会尽快与您联系
-                  </p>
+                <div className="bg-green-50 border border-green-100 rounded-2xl p-10 text-center">
+                  <CheckCircle className="w-14 h-14 text-green-500 mx-auto mb-4" />
+                  <h3 className="text-[20px] font-bold text-slate-800 mb-2">提交成功</h3>
+                  <p className="text-[14px] text-slate-500">阮老师会在 24 小时内与您联系，<br />请保持电话畅通。</p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="mt-6 px-6 py-2.5 bg-apple-blue text-white text-[14px] font-medium rounded-full hover:bg-apple-blue/90 transition-colors"
+                    className="mt-6 px-8 py-3 bg-slate-900 text-white text-[14px] font-semibold rounded-2xl hover:bg-slate-800 transition-colors"
                   >
                     继续咨询
                   </button>
@@ -155,121 +129,76 @@ export default function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                        家长姓名 <span className="text-apple-red">*</span>
+                      <label className="block text-[13px] font-medium text-slate-600 mb-1.5">
+                        家长姓名 <span className="text-red-400">*</span>
                       </label>
-                      <input
-                        type="text"
-                        name="parentName"
-                        value={form.parentName}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark placeholder:text-apple-gray-3 focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow"
-                        placeholder="请输入姓名"
-                      />
+                      <input type="text" name="parentName" value={form.parentName} onChange={handleChange} required
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all"
+                        placeholder="您的姓名" />
                     </div>
                     <div>
-                      <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                        学生姓名 <span className="text-apple-red">*</span>
+                      <label className="block text-[13px] font-medium text-slate-600 mb-1.5">
+                        学生姓名 <span className="text-red-400">*</span>
                       </label>
-                      <input
-                        type="text"
-                        name="studentName"
-                        value={form.studentName}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark placeholder:text-apple-gray-3 focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow"
-                        placeholder="请输入姓名"
-                      />
+                      <input type="text" name="studentName" value={form.studentName} onChange={handleChange} required
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all"
+                        placeholder="孩子的姓名" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                      年级 <span className="text-apple-red">*</span>
+                    <label className="block text-[13px] font-medium text-slate-600 mb-1.5">
+                      年级 <span className="text-red-400">*</span>
                     </label>
-                    <select
-                      name="grade"
-                      value={form.grade}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow appearance-none"
-                    >
+                    <select name="grade" value={form.grade} onChange={handleChange} required
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all">
                       <option value="">请选择年级</option>
-                      {["一年级", "二年级", "三年级", "四年级", "五年级", "六年级"].map(
-                        (g) => (
-                          <option key={g} value={g}>
-                            {g}
-                          </option>
-                        )
-                      )}
+                      {["一年级", "二年级", "三年级", "四年级", "五年级", "六年级"].map((g) => (
+                        <option key={g} value={g}>{g}</option>
+                      ))}
                     </select>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                        联系电话 <span className="text-apple-red">*</span>
+                      <label className="block text-[13px] font-medium text-slate-600 mb-1.5">
+                        联系电话 <span className="text-red-400">*</span>
                       </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={form.phone}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark placeholder:text-apple-gray-3 focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow"
-                        placeholder="请输入手机号"
-                      />
+                      <input type="tel" name="phone" value={form.phone} onChange={handleChange} required
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all"
+                        placeholder="手机号码" />
                     </div>
                     <div>
-                      <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                        微信号
-                      </label>
-                      <input
-                        type="text"
-                        name="wechat"
-                        value={form.wechat}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark placeholder:text-apple-gray-3 focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow"
-                        placeholder="请输入微信号"
-                      />
+                      <label className="block text-[13px] font-medium text-slate-600 mb-1.5">微信号</label>
+                      <input type="text" name="wechat" value={form.wechat} onChange={handleChange}
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all"
+                        placeholder="方便联系" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[13px] font-medium text-apple-dark mb-1.5">
-                      咨询内容
-                    </label>
-                    <textarea
-                      name="message"
-                      value={form.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="w-full px-4 py-2.5 bg-apple-gray-6 border-0 rounded-apple text-[14px] text-apple-dark placeholder:text-apple-gray-3 focus:outline-none focus:ring-2 focus:ring-apple-blue/30 transition-shadow resize-none"
-                      placeholder="请描述孩子的学习情况..."
-                    />
+                    <label className="block text-[13px] font-medium text-slate-600 mb-1.5">孩子情况</label>
+                    <textarea name="message" value={form.message} onChange={handleChange} rows={4}
+                      className="w-full px-4 py-3 bg-slate-50 border border-slate-100 rounded-xl text-[14px] text-slate-700 placeholder:text-slate-400 focus:outline-none focus:border-blue-300 focus:ring-2 focus:ring-blue-100 transition-all resize-none"
+                      placeholder="可以说说孩子的成绩、主要困难、希望达到的目标..." />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full py-3 bg-apple-blue text-white text-[15px] font-medium rounded-full hover:bg-apple-blue/90 transition-colors disabled:opacity-60 flex items-center justify-center gap-2"
-                  >
+                  <button type="submit" disabled={submitting}
+                    className="w-full py-4 bg-slate-900 text-white text-[15px] font-semibold rounded-2xl hover:bg-slate-800 transition-all hover:-translate-y-0.5 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2">
                     {submitting ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        提交中...
-                      </>
+                      <>提交中...</>
                     ) : (
                       <>
-                        <Send className="w-4 h-4" />
                         提交咨询
+                        <Send className="w-4 h-4" />
                       </>
                     )}
                   </button>
+
+                  <p className="text-center text-[12px] text-slate-400">提交即视为同意隐私政策，您的信息将被严格保密</p>
                 </form>
               )}
-            </div>
+            </AnimateOnScroll>
           </div>
         </div>
       </section>
