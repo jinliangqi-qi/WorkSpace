@@ -1,63 +1,52 @@
 "use client";
 
-import { Phone, Mail, MapPin } from "lucide-react";
-
 export function Footer() {
+  const links = [
+    { label: "首页", href: "/" },
+    { label: "关于我", href: "/about" },
+    { label: "课程", href: "/courses" },
+    { label: "案例", href: "/cases" },
+    { label: "联系", href: "/contact" },
+  ];
+
   return (
-    <footer className="bg-slate-900 text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-apple-gray-6 border-t border-apple-gray-5">
+      <div className="max-w-5xl mx-auto px-5 md:px-8 py-16">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center">
-                <span className="text-white font-bold">阮</span>
+            <div className="flex items-center gap-2.5 mb-3">
+              <div className="w-8 h-8 rounded-[10px] bg-apple-dark flex items-center justify-center">
+                <span className="text-white text-sm font-semibold">阮</span>
               </div>
-              <span className="font-bold text-lg">阮老师数学</span>
+              <span className="font-semibold text-[15px] text-apple-dark">
+                阮老师数学
+              </span>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              专注小学数学辅导5年，帮助上千名学生提升数学成绩，培养数学思维能力。
+            <p className="text-[13px] text-apple-gray leading-relaxed max-w-xs">
+              专注小学数学辅导，用心点亮每个孩子的数学天赋。
             </p>
           </div>
 
-          <div>
-            <h4 className="font-semibold mb-4">快速链接</h4>
-            <ul className="space-y-2 text-slate-400">
-              <li>
-                <a href="/about" className="hover:text-white transition-colors">关于我</a>
-              </li>
-              <li>
-                <a href="/courses" className="hover:text-white transition-colors">课程服务</a>
-              </li>
-              <li>
-                <a href="/cases" className="hover:text-white transition-colors">教学案例</a>
-              </li>
-              <li>
-                <a href="/contact" className="hover:text-white transition-colors">联系咨询</a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold mb-4">联系方式</h4>
-            <ul className="space-y-3 text-slate-400">
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-primary-400" />
-                <span>咨询电话：138-0013-8000</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-primary-400" />
-                <span>邮箱：ruanqizhen@example.com</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary-400" />
-                <span>地址：广东深圳宝安区</span>
-              </li>
-            </ul>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            {links.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-[13px] text-apple-gray hover:text-apple-dark transition-colors"
+              >
+                {item.label}
+              </a>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-500 text-sm">
-          <p>© 2026 阮琪珍老师 版权所有</p>
+        <div className="mt-12 pt-6 border-t border-apple-gray-5 flex flex-col sm:flex-row sm:justify-between gap-2 text-[12px] text-apple-gray-2">
+          <span>广东深圳宝安区</span>
+          <span>微信：Cherry-Rora</span>
+        </div>
+
+        <div className="mt-4 text-[11px] text-apple-gray-3">
+          &copy; {new Date().getFullYear()} 阮琪珍老师
         </div>
       </div>
     </footer>

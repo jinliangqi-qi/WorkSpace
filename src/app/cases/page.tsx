@@ -1,159 +1,143 @@
 "use client";
 
-import { Star, TrendingUp, Quote, CheckCircle, Award } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
-const successCases = [
+const cases = [
   {
-    name: "子涵",
+    name: "小明",
     grade: "四年级",
-    initialScore: 58,
-    currentScore: 82,
-    improvement: "+24分",
-    duration: "一学期",
-    story: "子涵三年级下开始跟不上，乘法口诀背不熟，应用题完全看不懂题目。我先花了3节课帮她补基础计算，再用画图的方式讲应用题，让她自己把题目'翻译'成图。期中考试及格了，期末考了82分，她妈妈发消息说孩子第一次主动说'数学也没那么难'。",
-    avatar: "子",
+    from: 72,
+    to: 95,
+    delta: "+23",
+    time: "3 个月",
+    story:
+      "之前对数学很抵触，基础概念不扎实。通过一对一辅导，用生活中的例子帮他理解，慢慢建立信心。",
   },
   {
-    name: "俊杰",
+    name: "小红",
     grade: "五年级",
-    initialScore: 76,
-    currentScore: 91,
-    improvement: "+15分",
-    duration: "4个月",
-    story: "俊杰的问题比较典型——知识点都懂，计算老出错。我让他每次做完题先自己检查一遍，把检查方法拆成三步：一看数字有没有抄错、二看运算符号、三看单位。光这个习惯就帮他少丢了七八分。加上几何题的专项训练，期末终于上了90。",
-    avatar: "俊",
+    from: 80,
+    to: 98,
+    delta: "+18",
+    time: "4 个月",
+    story:
+      "基础不错但总是粗心丢分。制定了错题整理计划，培养仔细检查的习惯，针对薄弱几何专项训练。",
   },
   {
-    name: "思琪",
-    grade: "三年级",
-    initialScore: 63,
-    currentScore: 85,
-    improvement: "+22分",
-    duration: "3个月",
-    story: "思琪是三年级转学过来的，之前的学校进度慢，刚来就跟不上。她性格内向，不懂也不敢问。我先和她多聊天建立信任，再从二年级的内容开始查漏补缺，每周给她布置一两道稍微超纲的题培养信心。三个月后不但成绩上来了，上课也开始举手发言了。",
-    avatar: "思",
+    name: "小刚",
+    grade: "六年级",
+    from: 65,
+    to: 90,
+    delta: "+25",
+    time: "5 个月",
+    story:
+      "小升初压力大，数学成绩不理想。系统复习全部知识点，针对高频考点训练，同时进行心理辅导。",
   },
 ];
 
-const testimonials = [
+const reviews = [
   {
-    content: "老师，子涵这次期末数学82分！她自己都不敢相信，回来第一件事就是给我看卷子。以前每次考试前都紧张得睡不着，这次居然说'我觉得我能考好'。真的很感谢您这学期的辅导，下学期继续跟您学。",
-    author: "子涵妈妈",
-    grade: "四年级",
-    date: "2026年1月",
-    rating: 5,
+    text: "阮老师真的很有耐心！孩子以前一遇到难题就哭，现在能主动思考了，进步了 20 多分。",
+    parent: "小明妈妈",
+    detail: "四年级",
   },
   {
-    content: "阮老师好，俊杰这次单元测验91分，计算题全对。您教的那个「三步检查法」真的有用，他现在每次做完题都自己先查一遍，这个习惯养成了比分数更重要。谢谢老师！",
-    author: "俊杰爸爸",
-    grade: "五年级",
-    date: "2026年3月",
-    rating: 5,
+    text: "老师讲解很清晰，孩子说比学校老师讲得更明白，每次上课都很期待。",
+    parent: "小红爸爸",
+    detail: "五年级",
   },
   {
-    content: "老师，跟您说个好消息，思琪今天数学课主动举手回答问题了！虽然答得不太完整，但班主任特意给我发了消息。她以前在班上一句话都不说的。成绩也在慢慢上来，这次测验考了78，及格线终于过了。",
-    author: "思琪妈妈",
-    grade: "三年级",
-    date: "2026年4月",
-    rating: 5,
+    text: "小升初压力大，阮老师不仅辅导功课，还经常鼓励孩子，给孩子信心。",
+    parent: "小刚妈妈",
+    detail: "六年级",
   },
   {
-    content: "阮老师，我们试听了三个老师的课，孩子自己选的您。他说您讲课有意思，不像学校里那么严肃。上了两个月了，最近一次考试进步了十几分，关键是现在做作业不用我催了，主动拿过来让我签字。",
-    author: "浩宇妈妈",
-    grade: "五年级",
-    date: "2026年5月",
-    rating: 5,
+    text: "之前找过几个老师都不太满意，阮老师是第一个能让孩子真正理解数学的老师。",
+    parent: "小华家长",
+    detail: "三年级",
   },
-];
-
-const achievements = [
-  { icon: TrendingUp, value: "500+", label: "辅导学生" },
-  { icon: Award, value: "98%", label: "家长满意度" },
-  { icon: Star, value: "4.9", label: "平均评分" },
 ];
 
 export default function CasesPage() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
 
-      <section className="pt-24 pb-16 bg-gradient-warm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
+      <section className="pt-28 md:pt-36 pb-16 md:pb-20">
+        <div className="max-w-5xl mx-auto px-5 md:px-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="text-[13px] font-medium text-apple-blue mb-4">
               教学案例
-            </h1>
-            <p className="text-lg text-slate-600">
-              真实案例见证孩子的成长与进步
             </p>
+            <h1 className="text-[32px] md:text-[48px] font-semibold text-apple-dark leading-[1.1] tracking-tight">
+              见证成长与进步
+            </h1>
           </div>
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 mb-16">
-            {achievements.map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-warm-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <item.icon className="w-8 h-8 text-primary-500" />
-                </div>
-                <div className="text-3xl font-bold text-primary-500 mb-1">{item.value}</div>
-                <div className="text-slate-600">{item.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
-            提分案例
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {successCases.map((item, index) => (
-              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-xl transition-all">
-                <div className="bg-gradient-to-br from-primary-500 to-primary-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
+      {/* Cases */}
+      <section className="pb-20 md:pb-28">
+        <div className="max-w-5xl mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {cases.map((c) => (
+              <div
+                key={c.name}
+                className="bg-apple-gray-6 rounded-apple overflow-hidden"
+              >
+                <div className="bg-apple-dark text-white p-6">
+                  <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-xl font-bold">
-                        {item.avatar}
+                      <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-[14px] font-semibold">
+                        {c.name[0]}
                       </div>
                       <div>
-                        <div className="font-semibold">{item.name}</div>
-                        <div className="text-sm opacity-80">{item.grade}</div>
+                        <div className="text-[14px] font-semibold">
+                          {c.name}
+                        </div>
+                        <div className="text-[12px] text-apple-gray-3">
+                          {c.grade}
+                        </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold">{item.improvement}</div>
-                      <div className="text-sm opacity-80">{item.duration}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-sm opacity-80">起始成绩</div>
-                      <div className="text-xl font-semibold">{item.initialScore}分</div>
-                    </div>
-                    <div className="flex-1 mx-4">
-                      <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-white rounded-full"
-                          style={{ width: `${((item.currentScore - item.initialScore) / 40) * 100}%` }}
-                        ></div>
+                      <div className="text-[20px] font-semibold text-apple-green">
+                        {c.delta}
+                      </div>
+                      <div className="text-[11px] text-apple-gray-3">
+                        {c.time}
                       </div>
                     </div>
+                  </div>
+                  <div className="flex items-center justify-between text-[13px]">
                     <div>
-                      <div className="text-sm opacity-80">当前成绩</div>
-                      <div className="text-xl font-semibold">{item.currentScore}分</div>
+                      <div className="text-apple-gray-3 text-[11px]">
+                        起始
+                      </div>
+                      <div className="font-medium">{c.from} 分</div>
+                    </div>
+                    <div className="flex-1 mx-4">
+                      <div className="h-1.5 bg-white/15 rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-apple-green rounded-full"
+                          style={{
+                            width: `${((c.to - c.from) / 40) * 100}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-apple-gray-3 text-[11px]">
+                        当前
+                      </div>
+                      <div className="font-medium">{c.to} 分</div>
                     </div>
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-slate-600 text-sm leading-relaxed">
-                    {item.story}
+                  <p className="text-[13px] text-apple-gray leading-relaxed">
+                    {c.story}
                   </p>
                 </div>
               </div>
@@ -162,27 +146,31 @@ export default function CasesPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
+      {/* Reviews */}
+      <section className="py-20 md:py-28 bg-apple-gray-6">
+        <div className="max-w-5xl mx-auto px-5 md:px-8">
+          <h2 className="text-[28px] md:text-[36px] font-semibold text-apple-dark tracking-tight mb-14">
             家长评价
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {testimonials.map((item, index) => (
-              <div key={index} className="bg-slate-50 rounded-2xl p-6">
-                <Quote className="w-8 h-8 text-primary-300 mb-4" />
-                <p className="text-slate-600 leading-relaxed mb-6">
-                  {item.content}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {reviews.map((r, i) => (
+              <div key={i} className="bg-white rounded-apple p-6 md:p-8">
+                <p className="text-[15px] text-apple-dark leading-relaxed mb-6">
+                  &ldquo;{r.text}&rdquo;
                 </p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="font-medium text-slate-800">{item.author}</div>
-                    <div className="text-sm text-slate-500">{item.grade} · {item.date}</div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-apple-gray-6 flex items-center justify-center">
+                    <span className="text-[12px] font-medium text-apple-gray">
+                      {r.parent[0]}
+                    </span>
                   </div>
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(item.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                    ))}
+                  <div>
+                    <div className="text-[13px] font-medium text-apple-dark">
+                      {r.parent}
+                    </div>
+                    <div className="text-[12px] text-apple-gray">
+                      {r.detail}
+                    </div>
                   </div>
                 </div>
               </div>
