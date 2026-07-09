@@ -20,17 +20,29 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({
-      parentName: "",
-      studentName: "",
-      grade: "",
-      phone: "",
-      wechat: "",
-      message: "",
-    });
+    try {
+      const res = await fetch("/api/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) {
+        throw new Error("提交失败，请稍后重试");
+      }
+      setIsSubmitted(true);
+      setFormData({
+        parentName: "",
+        studentName: "",
+        grade: "",
+        phone: "",
+        wechat: "",
+        message: "",
+      });
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "提交失败");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
