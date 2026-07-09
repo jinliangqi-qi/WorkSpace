@@ -47,7 +47,7 @@ export default function HomePage() {
     <div className="min-h-screen">
       <Navbar />
 
-      <section className="relative min-h-screen flex items-center bg-gradient-warm overflow-hidden">
+      <section className="relative min-h-[auto] md:min-h-screen flex items-center bg-gradient-warm overflow-hidden pt-20 md:pt-0">
         <div className="absolute inset-0">
           <div className="absolute top-20 right-10 w-72 h-72 bg-primary-200 rounded-full blur-3xl opacity-30"></div>
           <div className="absolute bottom-20 left-10 w-96 h-96 bg-warm-200 rounded-full blur-3xl opacity-30"></div>
@@ -88,7 +88,7 @@ export default function HomePage() {
                 </a>
               </div>
 
-              <div className="mt-12 flex items-center justify-center lg:justify-start gap-8">
+              <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary-500">5+</div>
                   <div className="text-sm text-slate-500">年教学经验</div>

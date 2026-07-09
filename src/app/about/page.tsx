@@ -129,9 +129,9 @@ export default function AboutPage() {
             {teachingPhilosophy.map((item, index) => (
               <div
                 key={index}
-                className="flex gap-6 p-6 bg-slate-50 rounded-2xl hover:shadow-card transition-all"
+                className="flex flex-col sm:flex-row gap-4 sm:gap-6 p-6 bg-slate-50 rounded-2xl hover:shadow-card transition-all"
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-warm-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-100 to-warm-100 rounded-xl flex items-center justify-center flex-shrink-0">
                   <item.icon className="w-8 h-8 text-primary-500" />
                 </div>
                 <div>

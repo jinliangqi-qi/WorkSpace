@@ -107,12 +107,12 @@ export default function ContactPage() {
                 联系方式
               </h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {contactInfo.map((item, index) => (
                   <a
                     key={index}
                     href={item.link}
-                    className="flex items-center gap-4 p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors"
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors"
                   >
                     <div className="w-12 h-12 bg-gradient-to-br from-primary-100 to-warm-100 rounded-xl flex items-center justify-center">
                       <item.icon className="w-6 h-6 text-primary-500" />

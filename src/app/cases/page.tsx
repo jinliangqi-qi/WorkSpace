@@ -94,7 +94,7 @@ export default function CasesPage() {
 
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center gap-12 mb-16">
+          <div className="flex flex-wrap justify-center gap-8 sm:gap-12 mb-16">
             {achievements.map((item, index) => (
               <div key={index} className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-primary-100 to-warm-100 rounded-full flex items-center justify-center mx-auto mb-3">
