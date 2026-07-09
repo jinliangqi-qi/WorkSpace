@@ -7,38 +7,46 @@ import { Footer } from "@/components/Footer";
 const features = [
   {
     icon: Star,
-    title: "提分显著",
-    description: "平均提分20-30分，多名学生从及格线提升到优秀",
+    title: "提分扎实",
+    description: "多数学生一学期提10-25分，重点是帮孩子建立学数学的信心",
   },
   {
     icon: Award,
     title: "经验丰富",
-    description: "5年小学数学教学经验，深谙各年级知识点",
+    description: "5年一线教学，熟悉各年级教材和常见易错点",
   },
   {
     icon: Clock,
     title: "耐心细致",
-    description: "善于发现学生问题，耐心引导，激发学习兴趣",
+    description: "孩子不敢问的问题，我会主动发现，不跳过任何一个知识漏洞",
   },
   {
     icon: Target,
     title: "因材施教",
-    description: "根据每个学生特点制定个性化学习方案",
+    description: "根据每个孩子的性格和基础定制教学节奏，不搞一刀切",
   },
 ];
 
 const testimonials = [
   {
-    content: "阮老师非常有耐心，孩子以前很怕数学，现在每次上课都很期待！这次期中考试从72分提到了95分！",
-    author: "小明妈妈",
-    grade: "四年级",
-    result: "72→95分",
+    content: "老师，子涵这次期末数学82分，她回来第一件事就是给我看卷子。以前考试前都紧张得睡不着，现在居然主动说"我觉得我能考好"。谢谢您！",
+    author: "子涵妈妈 · 四年级",
+    result: "58→82分",
   },
   {
-    content: "老师讲解很清晰，孩子以前总觉得数学很难，现在解题思路越来越清晰了，谢谢阮老师！",
-    author: "小红爸爸",
-    grade: "五年级",
-    result: "成绩稳步提升",
+    content: "上了两个月，最近一次考试进步了十几分。关键现在做作业不用催了，自己做完主动拿过来让我签字，这个变化太大了。",
+    author: "浩宇妈妈 · 五年级",
+    result: "进步明显",
+  },
+  {
+    content: "阮老师，思琪今天数学课主动举手发言了！班主任特意给我发了消息，说她变化很大。成绩也在慢慢上来，谢谢老师！",
+    author: "思琪妈妈 · 三年级",
+    result: "63→85分",
+  },
+  {
+    content: "您教的那个检查方法真的有用，俊杰这次计算题全对。这个习惯养成了比分数更重要，感谢老师的用心。",
+    author: "俊杰爸爸 · 五年级",
+    result: "76→91分",
   },
 ];
 
@@ -192,10 +200,7 @@ export default function HomePage() {
                   "{item.content}"
                 </p>
                 <div className="flex items-center justify-between pt-4 border-t border-slate-100">
-                  <div>
-                    <div className="font-medium text-slate-800">{item.author}</div>
-                    <div className="text-sm text-slate-500">{item.grade}</div>
-                  </div>
+                  <div className="font-medium text-slate-800">{item.author}</div>
                   <div className="px-3 py-1 bg-green-100 text-green-600 rounded-full text-sm font-medium">
                     {item.result}
                   </div>
