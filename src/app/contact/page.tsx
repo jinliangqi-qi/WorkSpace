@@ -144,7 +144,7 @@ export default function ContactPage() {
                 <p className="text-slate-600 mb-4">扫码添加微信咨询</p>
                 <div className="w-48 h-48 mx-auto bg-white rounded-xl border border-slate-200 flex items-center justify-center">
                   <img
-                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=QR%20code%20simple%20clean%20design%20black%20and%20white%20square&image_size=square"
+                    src="/img/Head.jpg"
                     alt="微信二维码"
                     className="w-40 h-40 object-cover"
                   />

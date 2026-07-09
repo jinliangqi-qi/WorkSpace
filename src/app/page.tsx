@@ -111,7 +111,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary-300 to-warm-300 rounded-3xl rotate-6 opacity-20"></div>
                 <div className="absolute inset-0 bg-white rounded-3xl shadow-soft overflow-hidden">
                   <img
-                    src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=friendly%20female%20elementary%20school%20math%20teacher%20portrait%20professional%20warm%20smile%20teaching%20classroom%20background%20bright%20lighting%20photorealistic&image_size=portrait_4_3"
+                    src="/img/Head.jpg"
                     alt="阮琪珍老师"
                     className="w-full h-full object-cover"
                   />

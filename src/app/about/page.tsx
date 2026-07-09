@@ -57,12 +57,16 @@ export default function AboutPage() {
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="relative">
               <img
-                src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=professional%20female%20math%20teacher%20in%20classroom%20teaching%20elementary%20students%20warm%20friendly%20environment%20bright%20colorful%20classroom&image_size=landscape_4_3"
+                src="/img/Head.jpg"
                 alt="阮老师教学中"
                 className="w-full rounded-2xl shadow-card"
               />
+              <div className="absolute -bottom-6 -right-6 bg-gradient-to-br from-primary-100 to-warm-100 rounded-2xl p-5 hidden lg:block">
+                <p className="text-primary-600 font-bold text-3xl">5年</p>
+                <p className="text-slate-600 text-sm">教学经验</p>
+              </div>
             </div>
             <div>
               <h2 className="text-3xl font-bold text-slate-800 mb-6">
@@ -94,15 +98,40 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
+
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-slate-50 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-primary-500 mb-2">500+</div>
+              <div className="text-slate-600">辅导学生</div>
+            </div>
+            <div className="bg-slate-50 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-primary-500 mb-2">98%</div>
+              <div className="text-slate-600">家长好评率</div>
+            </div>
+            <div className="bg-slate-50 rounded-2xl p-6 text-center">
+              <div className="text-4xl font-bold text-primary-500 mb-2">90%</div>
+              <div className="text-slate-600">成绩提升率</div>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="py-16 bg-slate-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-slate-800 text-center mb-12">
+          <h2 className="text-3xl font-bold text-slate-800 text-center mb-4">
             教学经历
           </h2>
-          <div className="relative">
+          <p className="text-center text-slate-500 mb-12">一路走来，初心不改</p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-5 flex items-center justify-center">
+              <img
+                src="/img/Head.jpg"
+                alt="生动的数学课堂"
+                className="w-full rounded-2xl shadow-card object-cover"
+              />
+            </div>
+            <div className="lg:col-span-7">
+            <div className="relative">
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-primary-200"></div>
             <div className="space-y-8">
               {experiences.map((item, index) => (
@@ -115,6 +144,8 @@ export default function AboutPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
             </div>
           </div>
         </div>

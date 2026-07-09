@@ -6,39 +6,70 @@
     <title>阮老师 - 咨询管理后台</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f8fafc; color: #334155; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f8fafc; color: #334155; min-height: 100vh; }
 
-        .header { background: linear-gradient(135deg, #ec4899, #db2777); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #ec4899, #db2777); color: white; padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 50; }
         .header h1 { font-size: 22px; font-weight: 600; }
         .header p { font-size: 14px; opacity: 0.8; margin-top: 4px; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
-        .stat-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+        .stat-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.15s; }
+        .stat-card:hover { transform: translateY(-2px); }
         .stat-card .label { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
         .stat-card .value { font-size: 28px; font-weight: 700; color: #ec4899; }
         .stat-card.unread .value { color: #f59e0b; }
 
-        .toolbar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-        .toolbar select, .toolbar button { padding: 8px 16px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; cursor: pointer; }
-        .toolbar select { background: white; }
-        .toolbar button { background: #ec4899; color: white; border: none; font-weight: 500; }
+        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+        .toolbar input,
+        .toolbar select,
+        .toolbar button { padding: 8px 14px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 14px; outline: none; transition: all 0.15s; }
+        .toolbar input:focus,
+        .toolbar select:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+        .toolbar input { flex: 1; min-width: 180px; background: white; }
+        .toolbar input::placeholder { color: #cbd5e1; }
+        .toolbar select { background: white; cursor: pointer; }
+        .toolbar button { background: #ec4899; color: white; border: none; font-weight: 500; cursor: pointer; white-space: nowrap; }
         .toolbar button:hover { background: #db2777; }
         .toolbar button.secondary { background: white; color: #64748b; border: 1px solid #e2e8f0; }
         .toolbar button.secondary:hover { background: #f8fafc; }
+        .toolbar button.success { background: #10b981; }
+        .toolbar button.success:hover { background: #059669; }
+        .toolbar button.danger { background: #ef4444; }
+        .toolbar button.danger:hover { background: #dc2626; }
+
+        .batch-bar { display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .batch-bar.show { display: flex; }
+        .batch-bar span { font-size: 14px; color: #1e40af; font-weight: 500; }
+        .batch-bar .count { font-weight: 700; }
+        .batch-bar button { padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; border: 1px solid; font-weight: 500; }
+        .batch-bar .btn-read { background: white; color: #2563eb; border-color: #2563eb; }
+        .batch-bar .btn-read:hover { background: #eff6ff; }
+        .batch-bar .btn-reply { background: white; color: #059669; border-color: #059669; }
+        .batch-bar .btn-reply:hover { background: #ecfdf5; }
+        .batch-bar .btn-delete { background: white; color: #ef4444; border-color: #ef4444; }
+        .batch-bar .btn-delete:hover { background: #fef2f2; }
+        .batch-bar .btn-cancel { background: transparent; color: #64748b; border-color: #e2e8f0; }
+
+        .select-all-row { display: flex; align-items: center; gap: 8px; padding: 0 0 12px 0; font-size: 13px; color: #64748b; cursor: pointer; }
+        .select-all-row input[type="checkbox"] { accent-color: #ec4899; width: 16px; height: 16px; cursor: pointer; }
 
         .inquiry-list { display: flex; flex-direction: column; gap: 12px; }
-        .inquiry-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #e2e8f0; transition: all 0.2s; }
+        .inquiry-card { background: white; border-radius: 12px; padding: 16px 16px 16px 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border-left: 4px solid #e2e8f0; transition: all 0.15s; display: flex; gap: 14px; align-items: flex-start; }
         .inquiry-card.unread { border-left-color: #f59e0b; background: #fffbeb; }
         .inquiry-card.replied { border-left-color: #10b981; }
-        .inquiry-card .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .inquiry-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .inquiry-card .cb-col { padding-top: 2px; flex-shrink: 0; }
+        .inquiry-card .cb-col input[type="checkbox"] { accent-color: #ec4899; width: 16px; height: 16px; cursor: pointer; }
+        .inquiry-card .content-col { flex: 1; min-width: 0; }
+        .inquiry-card .top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 6px; }
         .inquiry-card .name { font-size: 16px; font-weight: 600; }
         .inquiry-card .time { font-size: 12px; color: #94a3b8; }
-        .inquiry-card .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin-bottom: 12px; }
+        .inquiry-card .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 6px; margin-bottom: 10px; }
         .inquiry-card .info-item { font-size: 14px; color: #64748b; }
         .inquiry-card .info-item strong { color: #334155; font-weight: 500; }
-        .inquiry-card .message { background: #f8fafc; border-radius: 8px; padding: 12px; font-size: 14px; color: #475569; margin-bottom: 12px; }
-        .inquiry-card .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .inquiry-card .message { background: #f8fafc; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #475569; margin-bottom: 10px; word-break: break-word; }
+        .inquiry-card .actions { display: flex; gap: 6px; flex-wrap: wrap; }
         .inquiry-card .actions button { padding: 4px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid #e2e8f0; background: white; color: #64748b; }
         .inquiry-card .actions button:hover { background: #f8fafc; }
         .inquiry-card .actions button.primary { background: #ec4899; color: white; border-color: #ec4899; }
@@ -47,7 +78,7 @@
         .inquiry-card .actions button.danger:hover { background: #fef2f2; }
         .inquiry-card .note { margin-top: 8px; font-size: 13px; color: #64748b; font-style: italic; }
 
-        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; margin-left: 8px; vertical-align: middle; }
         .badge.unread { background: #fef3c7; color: #92400e; }
         .badge.replied { background: #d1fae5; color: #065f46; }
         .badge.read { background: #e2e8f0; color: #475569; }
@@ -63,13 +94,22 @@
         .login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; z-index: 100; }
         .login-box { background: white; border-radius: 16px; padding: 32px; width: 360px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
         .login-box h2 { text-align: center; margin-bottom: 24px; font-size: 20px; }
-        .login-box input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; margin-bottom: 12px; }
+        .login-box input { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; margin-bottom: 12px; outline: none; }
+        .login-box input:focus { border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
         .login-box button { width: 100%; padding: 10px; background: #ec4899; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
         .login-box button:hover { background: #db2777; }
         .login-error { color: #ef4444; font-size: 13px; text-align: center; margin-bottom: 8px; display: none; }
 
-        .toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; font-size: 14px; z-index: 200; transform: translateX(120%); transition: transform 0.3s; }
+        .toast { position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; font-size: 14px; z-index: 200; transform: translateX(120%); transition: transform 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .toast.show { transform: translateX(0); }
+        .toast.error { background: #ef4444; }
+
+        @media (max-width: 640px) {
+            .toolbar { flex-direction: column; }
+            .toolbar input { min-width: 100%; }
+            .inquiry-card { flex-direction: column; }
+            .inquiry-card .cb-col { align-self: flex-end; }
+        }
     </style>
 </head>
 <body>
@@ -82,25 +122,50 @@
 
     <div class="container" id="app" style="display:none;">
         <div class="stats">
-            <div class="stat-card">
+            <div class="stat-card" onclick="setFilter('all')">
                 <div class="label">总咨询数</div>
                 <div class="value" id="totalCount">0</div>
             </div>
-            <div class="stat-card unread">
+            <div class="stat-card unread" onclick="setFilter('unread')">
                 <div class="label">未读咨询</div>
                 <div class="value" id="unreadCount">0</div>
             </div>
         </div>
 
         <div class="toolbar">
+            <input type="text" id="searchInput" placeholder="搜索家长、学生、电话、微信号..." oninput="onSearchInput()" />
+            <select id="sortSelect" onchange="loadInquiries()">
+                <option value="created_at_desc">提交时间 ↓</option>
+                <option value="created_at_asc">提交时间 ↑</option>
+                <option value="parent_name_asc">家长姓名 A-Z</option>
+                <option value="parent_name_desc">家长姓名 Z-A</option>
+                <option value="student_name_asc">学生姓名 A-Z</option>
+                <option value="student_name_desc">学生姓名 Z-A</option>
+                <option value="grade_asc">年级 升序</option>
+                <option value="grade_desc">年级 降序</option>
+            </select>
             <select id="filterSelect" onchange="loadInquiries()">
                 <option value="all">全部咨询</option>
                 <option value="unread">未读咨询</option>
                 <option value="read">已读咨询</option>
             </select>
             <button class="secondary" onclick="loadInquiries()">刷新</button>
+            <button class="success" onclick="exportExcel()">导出 Excel</button>
             <span style="flex:1"></span>
             <button class="secondary" onclick="logout()">退出登录</button>
+        </div>
+
+        <div class="batch-bar" id="batchBar">
+            <span>已选择 <span class="count" id="batchCount">0</span> 条</span>
+            <button class="btn-read" onclick="batchMarkRead()">标记已读</button>
+            <button class="btn-reply" onclick="batchMarkReplied()">标记已回复</button>
+            <button class="btn-delete" onclick="batchDelete()">批量删除</button>
+            <button class="btn-cancel" onclick="clearSelection()">取消选择</button>
+        </div>
+
+        <div class="select-all-row" id="selectAllRow" style="display:none;">
+            <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" />
+            <label for="selectAllCheckbox">全选当前页</label>
         </div>
 
         <div class="inquiry-list" id="inquiryList"></div>
@@ -123,18 +188,21 @@
         const API = '';
         let currentPage = 1;
         let authed = false;
+        let selectedIds = new Set();
+        let searchTimer = null;
 
-        function showToast(msg) {
+        function showToast(msg, isError) {
             const t = document.getElementById('toast');
             t.textContent = msg;
             t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
+            if (isError) t.classList.add('error');
+            else t.classList.remove('error');
+            setTimeout(() => { t.classList.remove('show'); t.classList.remove('error'); }, 2500);
         }
 
         function login() {
             const u = document.getElementById('username').value;
             const p = document.getElementById('password').value;
-            // 简单验证 - 实际部署应改为后端验证
             if (u && p) {
                 authed = true;
                 document.getElementById('loginOverlay').style.display = 'none';
@@ -147,32 +215,60 @@
 
         function logout() {
             authed = false;
+            selectedIds.clear();
             document.getElementById('loginOverlay').style.display = 'flex';
             document.getElementById('app').style.display = 'none';
+            updateBatchBar();
+        }
+
+        function onSearchInput() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                currentPage = 1;
+                loadInquiries();
+            }, 300);
+        }
+
+        function setFilter(filter) {
+            document.getElementById('filterSelect').value = filter;
+            currentPage = 1;
+            loadInquiries();
+        }
+
+        function getSortParams() {
+            const val = document.getElementById('sortSelect').value;
+            const parts = val.split('_');
+            const order = parts.pop();
+            const by = parts.join('_');
+            return { sort_by: by, sort_order: order };
         }
 
         async function loadInquiries() {
             const filter = document.getElementById('filterSelect').value;
-            let url = `${API}/api/inquiries?page=${currentPage}&page_size=20`;
+            const search = document.getElementById('searchInput').value.trim();
+            const sort = getSortParams();
+            let url = `${API}/api/inquiries?page=${currentPage}&page_size=20&sort_by=${sort.sort_by}&sort_order=${sort.sort_order}`;
             if (filter === 'unread') url += '&is_read=false';
             if (filter === 'read') url += '&is_read=true';
+            if (search) url += `&search=${encodeURIComponent(search)}`;
 
             try {
                 const res = await fetch(url);
                 const data = await res.json();
                 document.getElementById('totalCount').textContent = data.total;
                 document.getElementById('unreadCount').textContent = data.unread;
+                document.getElementById('selectAllRow').style.display = data.items.length > 0 ? 'flex' : 'none';
                 renderInquiries(data.items);
                 renderPagination(data.total);
             } catch (e) {
-                document.getElementById('inquiryList').innerHTML = '<div class="empty"><div class="icon">⚠️</div>加载失败，请检查后端服务是否启动</div>';
+                document.getElementById('inquiryList').innerHTML = '<div class="empty"><div class="icon">&#9888;&#65039;</div>加载失败，请检查后端服务是否启动</div>';
             }
         }
 
         function renderInquiries(items) {
             const container = document.getElementById('inquiryList');
             if (items.length === 0) {
-                container.innerHTML = '<div class="empty"><div class="icon">📭</div>暂无咨询记录</div>';
+                container.innerHTML = '<div class="empty"><div class="icon">&#128236;</div>暂无咨询记录</div>';
                 return;
             }
 
@@ -181,32 +277,48 @@
                 const statusBadge = item.is_replied
                     ? '<span class="badge replied">已回复</span>'
                     : (item.is_read ? '<span class="badge read">已读</span>' : '<span class="badge unread">未读</span>');
+                const checked = selectedIds.has(item.id) ? 'checked' : '';
 
                 return `
                 <div class="inquiry-card ${statusClass}">
-                    <div class="top">
-                        <div>
-                            <span class="name">${item.parent_name}</span>
-                            ${statusBadge}
+                    <div class="cb-col">
+                        <input type="checkbox" ${checked} onchange="toggleSelect(${item.id}, this.checked)" />
+                    </div>
+                    <div class="content-col">
+                        <div class="top">
+                            <div>
+                                <span class="name">${escapeHtml(item.parent_name)}</span>
+                                ${statusBadge}
+                            </div>
+                            <div class="time">${new Date(item.created_at).toLocaleString('zh-CN')}</div>
                         </div>
-                        <div class="time">${new Date(item.created_at).toLocaleString('zh-CN')}</div>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item"><strong>学生：</strong>${item.student_name}</div>
-                        <div class="info-item"><strong>年级：</strong>${item.grade}</div>
-                        <div class="info-item"><strong>电话：</strong><a href="tel:${item.phone}">${item.phone}</a></div>
-                        <div class="info-item"><strong>微信：</strong>${item.wechat || '未填写'}</div>
-                    </div>
-                    ${item.message ? `<div class="message">${item.message}</div>` : ''}
-                    ${item.note ? `<div class="note">备注：${item.note}</div>` : ''}
-                    <div class="actions">
-                        ${!item.is_read ? `<button class="primary" onclick="markRead(${item.id})">标记已读</button>` : ''}
-                        ${!item.is_replied ? `<button onclick="markReplied(${item.id})">标记已回复</button>` : ''}
-                        <button onclick="addNote(${item.id})">添加备注</button>
-                        <button class="danger" onclick="deleteInquiry(${item.id})">删除</button>
+                        <div class="info-grid">
+                            <div class="info-item"><strong>学生：</strong>${escapeHtml(item.student_name)}</div>
+                            <div class="info-item"><strong>年级：</strong>${escapeHtml(item.grade)}</div>
+                            <div class="info-item"><strong>电话：</strong><a href="tel:${item.phone}">${item.phone}</a></div>
+                            <div class="info-item"><strong>微信：</strong>${escapeHtml(item.wechat) || '未填写'}</div>
+                        </div>
+                        ${item.message ? `<div class="message">${escapeHtml(item.message)}</div>` : ''}
+                        ${item.note ? `<div class="note">备注：${escapeHtml(item.note)}</div>` : ''}
+                        <div class="actions">
+                            ${!item.is_read ? `<button class="primary" onclick="markRead(${item.id})">标记已读</button>` : ''}
+                            ${!item.is_replied ? `<button onclick="markReplied(${item.id})">标记已回复</button>` : ''}
+                            <button onclick="addNote(${item.id})">添加备注</button>
+                            <button class="danger" onclick="deleteInquiry(${item.id})">删除</button>
+                        </div>
                     </div>
                 </div>`;
             }).join('');
+
+            // 同步全选复选框状态
+            const allChecked = items.every(item => selectedIds.has(item.id));
+            document.getElementById('selectAllCheckbox').checked = allChecked;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         function renderPagination(total) {
@@ -227,6 +339,105 @@
             loadInquiries();
         }
 
+        // ========== 选择和批量操作 ==========
+
+        function toggleSelect(id, checked) {
+            if (checked) selectedIds.add(id);
+            else selectedIds.delete(id);
+            updateBatchBar();
+            // 同步全选按钮
+            const items = document.querySelectorAll('.inquiry-card .cb-col input[type="checkbox"]');
+            const allChecked = items.length > 0 && Array.from(items).every(cb => cb.checked);
+            document.getElementById('selectAllCheckbox').checked = allChecked;
+        }
+
+        function toggleSelectAll() {
+            const allCb = document.getElementById('selectAllCheckbox');
+            const items = document.querySelectorAll('.inquiry-card .cb-col input[type="checkbox"]');
+            items.forEach(cb => {
+                cb.checked = allCb.checked;
+                // 从 cb 的 onchange 中提取 id
+                const match = cb.getAttribute('onchange').match(/toggleSelect\((\d+)/);
+                if (match) {
+                    const id = parseInt(match[1]);
+                    if (allCb.checked) selectedIds.add(id);
+                    else selectedIds.delete(id);
+                }
+            });
+            updateBatchBar();
+        }
+
+        function clearSelection() {
+            selectedIds.clear();
+            document.querySelectorAll('.inquiry-card .cb-col input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('selectAllCheckbox').checked = false;
+            updateBatchBar();
+        }
+
+        function updateBatchBar() {
+            const bar = document.getElementById('batchBar');
+            const count = document.getElementById('batchCount');
+            if (selectedIds.size > 0) {
+                bar.classList.add('show');
+                count.textContent = selectedIds.size;
+            } else {
+                bar.classList.remove('show');
+            }
+        }
+
+        async function batchMarkRead() {
+            if (selectedIds.size === 0) return;
+            await fetch(`${API}/api/inquiries/batch/read`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: Array.from(selectedIds) }),
+            });
+            showToast(`已标记 ${selectedIds.size} 条为已读`);
+            clearSelection();
+            loadInquiries();
+        }
+
+        async function batchMarkReplied() {
+            if (selectedIds.size === 0) return;
+            await fetch(`${API}/api/inquiries/batch/reply`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: Array.from(selectedIds) }),
+            });
+            showToast(`已标记 ${selectedIds.size} 条为已回复`);
+            clearSelection();
+            loadInquiries();
+        }
+
+        async function batchDelete() {
+            if (selectedIds.size === 0) return;
+            if (!confirm(`确定要删除选中的 ${selectedIds.size} 条咨询记录吗？此操作不可撤销。`)) return;
+            await fetch(`${API}/api/inquiries/batch`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ids: Array.from(selectedIds) }),
+            });
+            showToast(`已删除 ${selectedIds.size} 条记录`);
+            clearSelection();
+            loadInquiries();
+        }
+
+        // ========== 导出 ==========
+
+        function exportExcel() {
+            const filter = document.getElementById('filterSelect').value;
+            const search = document.getElementById('searchInput').value.trim();
+            const sort = getSortParams();
+            let url = `${API}/api/inquiries/export?sort_by=${sort.sort_by}&sort_order=${sort.sort_order}`;
+            if (filter === 'unread') url += '&is_read=false';
+            if (filter === 'read') url += '&is_read=true';
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            window.open(url, '_blank');
+            showToast('正在导出 Excel...');
+        }
+
+        // ========== 单条操作 ==========
+
         async function markRead(id) {
             await fetch(`${API}/api/inquiries/${id}/read`, { method: 'PUT' });
             showToast('已标记为已读');
@@ -241,7 +452,7 @@
 
         async function addNote(id) {
             const note = prompt('请输入备注内容：');
-            if (note) {
+            if (note !== null) {
                 await fetch(`${API}/api/inquiries/${id}/note`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -255,6 +466,8 @@
         async function deleteInquiry(id) {
             if (confirm('确定要删除这条咨询记录吗？')) {
                 await fetch(`${API}/api/inquiries/${id}`, { method: 'DELETE' });
+                selectedIds.delete(id);
+                updateBatchBar();
                 showToast('已删除');
                 loadInquiries();
             }
