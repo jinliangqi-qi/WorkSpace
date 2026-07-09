@@ -50,7 +50,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="w-4 h-4 text-primary-400" />
-                <span>地址：北京市朝阳区</span>
+                <span>地址：广东深圳宝安区</span>
               </li>
             </ul>
           </div>

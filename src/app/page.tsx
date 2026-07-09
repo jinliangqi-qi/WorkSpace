@@ -141,7 +141,7 @@ export default function HomePage() {
               为什么选择阮老师？
             </h2>
             <p className="text-lg text-slate-600">
-              五大核心优势，让孩子的数学学习事半功倍
+              四大核心优势，让孩子的数学学习事半功倍
             </p>
           </div>
 

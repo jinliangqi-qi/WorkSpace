@@ -10,6 +10,7 @@ const experiences = [
   { year: "2023", title: "专注一对一辅导", description: "转向一对一精品辅导，积累丰富经验" },
   { year: "2024", title: "辅导学生突破500人", description: "帮助500+学生提升数学成绩" },
   { year: "2025", title: "独立开设工作室", description: "成立个人工作室，专注个性化教学" },
+  { year: "2026", title: "线上辅导全面升级", description: "线上线下同步辅导，服务更多学生家庭" },
 ];
 
 const teachingPhilosophy = [

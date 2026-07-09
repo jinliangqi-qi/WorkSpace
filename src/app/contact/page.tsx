@@ -59,7 +59,7 @@ export default function ContactPage() {
     {
       icon: MapPin,
       title: "教学地址",
-      content: "北京市朝阳区",
+      content: "广东深圳宝安区",
       link: "#",
     },
   ];
